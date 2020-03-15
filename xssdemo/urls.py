@@ -18,6 +18,6 @@ from django.urls import path
 from xssdemo import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('regist', views.regist),
-    path('login', views.login)
+    path('index/', views.index),
+    path('comment/', views.comment),
 ]

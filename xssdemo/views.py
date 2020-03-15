@@ -1,15 +1,22 @@
-from django.http import HttpResponse
-from xssdemo.models import Users
-from json import dumps
-def regist(request):
-    nickname = request.POST.get('nickname')
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    Users.objects.create(nickname=nickname,username=username,password=password)
-    return HttpResponse(dumps({'state':'ok'}))
+from django.shortcuts import render
 
-def login(request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    res = list(Users.objects.filter(username=username,password=password).values())
-    return HttpResponse(dumps(res))
+msg = []
+def comment(request):
+    if request.method == "GET":
+        return render(request,'comment.html')
+    else:
+        v = request.POST.get('content')
+        if "script" in v:
+            return render(request,'comment.html',{'error': 'error'})
+        else:
+            msg.append(v)
+            return render(request,'comment.html')
+
+def index(request):
+    return render(request,'index.html',{'msg':msg})
+
+def test(request):
+    from django.utils.safestring import mark_safe
+    temp = "<a href='http://www.baidu.com'>baidu</a>"
+    newtemp = mark_safe(temp)
+    return render(request,'test.html',{'temp':newtemp})
