@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script>
+		function regi(){
+			username = document.getElementById(1).value
+			password = document.getElementById(2).value
+			nickname = document.getElementById(3).value
+			$.ajax({
+			  type: 'POST',
+			  url: "http://127.0.0.1:8000/regist",
+			  header:{
+			  	ContentType:'application/x-www-form-urlencoded'
+			  },
+			  data: {username:username,password:password,nickname:nickname},
+			  dataType:'json',
+			  success: function(res){
+			  	if(res.state=='ok'){
+			  		alert("注册成功")
+			  	}else{
+			  		alert('注册失败')
+			  	}
+			  },
+			});
+		}
+		function login(){
+			username = document.getElementById(4).value
+			password = document.getElementById(5).value
+			$.ajax({
+			  type: 'POST',
+			  url: "http://127.0.0.1:8000/login",
+			  header:{
+			  	ContentType:'application/x-www-form-urlencoded'
+			  },
+			  data: {username:username,password:password},
+			  dataType:'json',
+			  success: function(res){
+			  	console.log(res)
+			  	if(res!=null && res != ''){
+			  		alert('登录成功')
+			  		document.getElementById(6).innerHTML = res[0].nickname
+			  	}else{
+			  		alert('登录失败')
+			  	}
+			  },
+			});
+		}
+	</script>
+</head>
+<body>
+	<div align="center" style="padding-top: 100px;border:1px;border-style: solid;padding-bottom: 100px">
+		<h2>注册</h2>
+		<input id=1 type='text' placeholder="用户名" value="" />
+		<input id=2 type='text' placeholder="密码" value="" />
+		<input id=3 type='text' placeholder="昵称" value="" />
+		<input onclick="regi()" type="button" value="点击">
+	</div>
+	<div align="center" style="padding-top: 100px;border:1px;border-style: solid;padding-bottom: 100px">
+		<h2>登录</h2>
+		<input id=4 type='text' placeholder="用户名" value="" />
+		<input id=5 type='text' placeholder="密码" value="" />
+		<input onclick="login()" type="button" value="点击">
+	</div>
+	<div align="center" style="padding-top: 100px;border:1px;border-style: solid;padding-bottom: 100px">
+		<h2>首页</h2>
+		<div>
+			昵称：<p id=6></p>
+		</div>
+	</div>
+	
+</body>
+</html>
