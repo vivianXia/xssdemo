@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from xssdemo import views
+
+from django.middleware.csrf import CsrfViewMiddleware
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', views.index),
