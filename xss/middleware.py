@@ -23,9 +23,8 @@ class XssViewMiddleware(MiddlewareMixin):
     def _clean_data(cls, query_dict):
         data_copy = query_dict.copy()
         for key, values in data_copy.lists():
-            new_value_list = []
+            clean_value_list = []
             for value in values:
-                new_value = bleach.clean(text=value)
-                new_value_list.append(new_value)
-            data_copy.setlist(key, new_value_list)
+                clean_value_list.append(bleach.clean(text=value))
+            data_copy.setlist(key, clean_value_list)
         return data_copy
