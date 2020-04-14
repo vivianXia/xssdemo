@@ -1,8 +1,11 @@
 from django.shortcuts import render
 
+from xss.decorators import skip_xss_check
+
 msg = []
 
 
+@skip_xss_check
 def comment(request):
     if request.method == "GET":
         return render(request, 'comment.html')
